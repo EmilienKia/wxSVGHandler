@@ -1,0 +1,6 @@
+[requires]
+nanosvg/20190405
+
+[generators]
+CMakeDeps
+CMakeToolchain

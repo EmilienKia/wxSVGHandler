@@ -1,0 +1,70 @@
+# wxSvgHandler
+
+A C++ library that provides an SVG image handler for wxWidgets, enabling loading and displaying SVG files (including gzip-compressed ones) directly in wxWidgets applications.
+
+## Features
+
+- Support for standard and compressed SVG files (.svg.gz)
+- Native integration with wxWidgets image system
+- Configurable resizing and DPI options
+- NanoSVG-based rendering (with optional Skia support)
+- Compatible with wxWidgets 3.x
+
+## Building
+
+### Prerequisites
+
+- CMake 3.20+
+- wxWidgets (with base and core components)
+- Conan (for dependency management)
+
+### Instructions
+
+#### Install dependencies
+```bash
+conan install . --build=missing
+```
+
+#### Configure and build the project
+```bash
+mkdir build && cd build cmake .. -DCMAKE_TOOLCHAIN_FILE=conan_toolchain.cmake make
+```
+
+## Usage
+
+### Integration in your application
+
+```cpp
+#include "imagsvg.h"
+
+// In your initialization function
+// Next to wxInitAllImageHandlers();
+wxImage::AddHandler(new wxSvgImageHandler());
+
+// Load an SVG file
+wxImage image;
+if (image.LoadFile("my_file.svg")) {
+    // Use the image as usual
+    wxBitmap bitmap(image);
+}
+
+// With resizing options
+image.SetOption(wxIMAGE_OPTION_SVG_WIDTH, 200);
+image.SetOption(wxIMAGE_OPTION_SVG_HEIGHT, 200);
+image.LoadFile("my_file.svg");
+```
+
+### Available options
+- : Desired width in pixels `wxIMAGE_OPTION_SVG_WIDTH`
+- : Desired height in pixels `wxIMAGE_OPTION_SVG_HEIGHT`
+- : Resolution in DPI `wxIMAGE_OPTION_SVG_DPI`
+- : Measurement unit `wxIMAGE_OPTION_SVG_UNIT`
+
+## License
+Distributed under the MIT License.
+See the `LICENSE` file for license details.
+
+## Third-party libraries
+This project includes or relies on third-party libraries.
+See `THIRD_PARTY` for more details.
+
